@@ -1,6 +1,7 @@
 from pathlib import Path
 
-from chunking.fixed_size_chunking import fixed_size_chunking
+# from chunking.fixed_size_chunking import fixed_size_chunking
+from src.chunking import fixed_size_chunking
 from src.db.vector_db_milvus import MilvusVectorStore
 from src.utility.document_loader import load_document
 from src.service.embedding_service import EmbeddingService
