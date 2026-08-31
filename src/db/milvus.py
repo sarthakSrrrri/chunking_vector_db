@@ -4,10 +4,12 @@ def search(self, query_embedding, top_k=5):
         data=[query_embedding.tolist()],
         limit=top_k,
         output_fields=[
-            "text",
-            "source",
-            "file_type",
+     "text",
+    "source",
+    "file_type",
+    "page",
         ],
     )
 
     return results
+

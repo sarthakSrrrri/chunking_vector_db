@@ -15,8 +15,12 @@ class MilvusVectorStore:
 
         self._create_collection()
 
+
     def _create_collection(self):
         if self.client.has_collection(self.collection_name):
+            self.client.load_collection(
+                collection_name=self.collection_name
+            )
             return
 
         schema = self.client.create_schema(
@@ -51,19 +55,23 @@ class MilvusVectorStore:
             index_params=index_params,
         )
 
+        self.client.load_collection(
+            collection_name=self.collection_name
+        )
+
+
     def insert(self, chunks, embeddings):
         data = []
 
         for chunk, embedding in zip(chunks, embeddings):
-            data.append(
-                {
-                    "id": chunk["chunk_id"],
-                    "vector": embedding.tolist(),
-                    "text": chunk["text"],
-                    "source": chunk["source"],
-                    "file_type": chunk["file_type"],
-                }
-            )
+            data.append({
+                "id": chunk["chunk_id"],
+                "vector": embedding.tolist(),
+                "text": chunk["text"],
+                "source": chunk["source"],
+                "file_type": chunk["file_type"],
+                "page": chunk["page"],
+            })
 
         self.client.insert(
             collection_name=self.collection_name,
@@ -71,6 +79,9 @@ class MilvusVectorStore:
         )
 
         self.client.flush(self.collection_name)
+
+
+
 
     def search(self, query_embedding, top_k=5):
         results = self.client.search(
@@ -81,6 +92,7 @@ class MilvusVectorStore:
                 "text",
                 "source",
                 "file_type",
+                "page",
             ],
         )
 

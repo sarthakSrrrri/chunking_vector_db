@@ -4,24 +4,47 @@ import pandas as pd
 from pypdf import PdfReader
 
 
-def load_document(file_path: Path) -> str:
+def load_document(file_path: Path) -> list[dict]:
     suffix = file_path.suffix.lower()
 
     if suffix == ".txt":
-        return file_path.read_text(encoding="utf-8")
+        return [
+            {
+                "text": file_path.read_text(encoding="utf-8"),
+                "metadata": {
+                    "page": None,
+                },
+            }
+        ]
 
     if suffix == ".csv":
-        return pd.read_csv(file_path).to_csv(index=False)
+        return [
+            {
+                "text": pd.read_csv(file_path).to_csv(index=False),
+                "metadata": {
+                    "page": None,
+                },
+            }
+        ]
 
     if suffix == ".pdf":
         reader = PdfReader(file_path)
 
-        pages = []
-        for page in reader.pages:
-            text = page.extract_text()
-            if text:
-                pages.append(text)
+        documents = []
 
-        return "\n".join(pages)
+        for page_number, page in enumerate(reader.pages, start=1):
+            text = page.extract_text()
+
+            if text:
+                documents.append(
+                    {
+                        "text": text,
+                        "metadata": {
+                            "page": page_number,
+                        },
+                    }
+                )
+
+        return documents
 
     raise ValueError(f"Unsupported file type: {suffix}")
