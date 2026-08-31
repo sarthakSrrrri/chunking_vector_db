@@ -29,3 +29,5 @@ embeddings/
 
 # Logs
 *.log
+
+.claude
