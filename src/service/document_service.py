@@ -1,16 +1,20 @@
 from pathlib import Path
 
-# from chunking.fixed_size_chunking import fixed_size_chunking
-# from src.chunking import fixed_size_chunking
-from src.db.vector_db_milvus import MilvusVectorStore
+from dotenv import load_dotenv
+
+
+from src.db.schema import MilvusVectorStore
 from src.utility.document_loader import load_document
 from src.service.embedding_service import EmbeddingService
-# from src.vector_db.milvus import MilvusVectorStore
-
 from src.chunking.fixed_size_chunking import fixed_size_chunking
-UPLOAD_DIR = Path("data/uploads")
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+import os
 
+load_dotenv()
+
+UPLOAD_DIR = Path(os.getenv("DB_UPLOADED_FILE_PATH"))
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+CHUNK_SIZE :int = int(os.getenv("CHUNK_SIZE"))
+OVERLAP = int(os.getenv("OVERLAP"))
 ALLOWED_EXTENSIONS = {".pdf", ".txt", ".csv"}
 
 embedding_service = EmbeddingService()
@@ -30,13 +34,13 @@ async def process_document(file):
 
     pages = load_document(file_path)
 
-    chunk_records = []
+    chunk_records = []  # storing all the chunks here
 
     for page in pages:
         chunks = fixed_size_chunking(
             text=page["text"],
-            chunk_size=500,
-            chunk_overlap=50,
+            chunk_size=CHUNK_SIZE,
+            chunk_overlap=OVERLAP,
         )
 
         for index, chunk in enumerate(chunks):
@@ -54,7 +58,7 @@ async def process_document(file):
         [chunk["text"] for chunk in chunk_records]
     )
 
-    vector_store.insert(
+    vector_store.insert(  # Inserting all the entities inside the collection
         chunks=chunk_records,
         embeddings=embeddings,
     )

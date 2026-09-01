@@ -1,15 +1,15 @@
 import time
-
-from src.db.vector_db_milvus import MilvusVectorStore
+from src.db.schema import MilvusVectorStore
 from src.service.embedding_service import EmbeddingService
-# from src.vector_db.milvus import MilvusVectorStore
+import os
+from dotenv import load_dotenv
 
-
+load_dotenv()
 embedding_service = EmbeddingService()
 vector_store = MilvusVectorStore()
 
 
-def search_documents(query: str, top_k: int = 5):
+def search_documents(query: str, top_k: int = os.getenv("TOP_K")):
     start_time = time.perf_counter()
 
     query_embedding = embedding_service.embed_query(query)
