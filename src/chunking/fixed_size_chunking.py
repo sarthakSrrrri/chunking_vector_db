@@ -1,10 +1,14 @@
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 def fixed_size_chunking(
     text: str,
-    chunk_size: int = 500,
-    chunk_overlap: int = 50,
+    chunk_size = int(os.getenv("CHUNK_SIZE")),
+    chunk_overlap = int(os.getenv("OVERLAP")),
 ) -> list[str]:
 
-    if chunk_size <= 0:
+    if chunk_size < 0:
         raise ValueError("chunk_size must be greater than 0")
 
     if chunk_overlap < 0 or chunk_overlap >= chunk_size:

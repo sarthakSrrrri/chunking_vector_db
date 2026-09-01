@@ -4,7 +4,7 @@ from src.routes.document import router as document_router
 
 
 app = FastAPI(
-    title="Chunking & Vector DB API",
+    # title="Milvus",
     version="1.0.0",
 )
 
