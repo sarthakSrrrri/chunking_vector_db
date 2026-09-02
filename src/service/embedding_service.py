@@ -1,22 +1,21 @@
-from sentence_transformers import SentenceTransformer
-import os
-from dotenv import load_dotenv
-load_dotenv()
+from src.embeddings.base import EmbeddingModel
+
 
 class EmbeddingService:
 
-    def __init__(self, model_name: str = os.getenv("EMBEEDING_MODEL")):
-        self.model = SentenceTransformer(model_name)
+    def __init__(self, model: EmbeddingModel):
+        self.model = model
+
+    @property
+    def model_name(self) -> str:
+        return self.model.model_name
+
+    @property
+    def dimension(self) -> int:
+        return self.model.dimension
 
     def embed_documents(self, texts: list[str]):
-        return self.model.encode(
-            texts,
-            normalize_embeddings=True,
-            show_progress_bar=True,
-        )
+        return self.model.embed_documents(texts)
 
-    def embed_query(self, query: str):
-        return self.model.encode(
-            query,
-            normalize_embeddings=True,
-        )
+    def embed_query(self, text: str):
+        return self.model.embed_query(text)
