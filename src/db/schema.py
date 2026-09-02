@@ -17,7 +17,7 @@ class MilvusVectorStore:
         self,
         db_path: str = "data/milvus.db",
         collection_name: str = COLLECTION_NAME,
-        dimension: int = DIMENSION,
+        dimension: int = 384,
     ):
         self.client = MilvusClient(db_path)
         self.collection_name = collection_name
@@ -40,7 +40,7 @@ class MilvusVectorStore:
         schema.add_field(
             field_name="id",
             datatype=DataType.VARCHAR,
-            max_length=200,
+            max_length=os.getenv("MAX_LENGTH"),
             is_primary=True,
         )
 
