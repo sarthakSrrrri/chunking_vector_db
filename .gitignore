@@ -20,7 +20,7 @@ env/
 *.db
 chroma_db/
 data/
-embeddings/
+
 
 # OS / editor
 .DS_Store
