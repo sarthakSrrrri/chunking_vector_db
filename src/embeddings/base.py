@@ -20,3 +20,6 @@ class EmbeddingModel(ABC):
     @abstractmethod
     def embed_query(self, text: str):
         pass
+
+
+

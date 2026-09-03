@@ -28,6 +28,10 @@ async def upload_document(
         )
 
 
+
+
+
+
 @router.get("/search")
 def search(
     query: str = Query(..., min_length=1),

@@ -41,7 +41,7 @@ def search_documents(
         top_k=top_k,
     )
 
-    retrieved = []
+    retrieved = [] # adding retreival chunks
 
     for rank, result in enumerate(results[0], start=1):
         retrieved.append({

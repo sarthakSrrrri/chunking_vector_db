@@ -22,7 +22,6 @@ UPLOAD_DIR.mkdir(
     exist_ok=True,
 )
 
-
 CHUNK_SIZE = int(
     os.getenv("CHUNK_SIZE", "500")
 )
@@ -38,6 +37,8 @@ ALLOWED_EXTENSIONS = tuple(
         ".pdf,.txt,.csv",
     ).split(",")
 )
+
+
 
 
 async def process_document(

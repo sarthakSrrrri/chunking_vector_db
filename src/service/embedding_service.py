@@ -19,3 +19,9 @@ class EmbeddingService:
 
     def embed_query(self, text: str):
         return self.model.embed_query(text)
+
+
+# class EmbeddingSetting:
+
+
+    
