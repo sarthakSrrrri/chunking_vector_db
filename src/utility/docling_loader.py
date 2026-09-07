@@ -11,16 +11,8 @@ def parse_document(file_path: Path):
 
     return result.document
 
+# document = parse_document(
+#     Path("")
+# )
 
-
-
-# from pathlib import Path
-
-# from utility.docling_loader import parse_document
-
-
-document = parse_document(
-    Path("../../data/pdfs/structured/edge_cases.pdf")
-)
-
-print(document.export_to_markdown())
+# print(document.export_to_markdown())
