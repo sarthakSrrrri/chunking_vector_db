@@ -1,5 +1,6 @@
 fastapi
 uvicorn[standard]
+docling
 python-multipart
 python-dotenv
 docling-core
