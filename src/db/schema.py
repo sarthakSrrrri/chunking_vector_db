@@ -15,11 +15,11 @@ class MilvusVectorStore:
 
     def __init__(
         self,
-        db_path: str = "data/milvus.db",
+        db_path : str =  "data/milvus.db",
         collection_name: str = COLLECTION_NAME,
         dimension: int = 384,
     ):
-        self.client = MilvusClient(db_path)
+        self.client = MilvusClient("data/milvus.db")
         self.collection_name = collection_name
         self.dimension = dimension
 
