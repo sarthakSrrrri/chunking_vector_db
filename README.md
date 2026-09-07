@@ -21,6 +21,19 @@ First create a database schema for because Milvus DB should know , what kind of 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Collection
 
 A collection is the main storage unit in Milvus. It is where Milvus keeps a set of entities that follow the same structure.

@@ -9,5 +9,8 @@ milvus-lite
 pypdf
 pandas
 
+llama-index-core
+pymupdf4llm
+
 sentence-transformers
 torch --index-url https://download.pytorch.org/whl/cpu

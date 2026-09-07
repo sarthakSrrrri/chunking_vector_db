@@ -14,12 +14,14 @@ router = APIRouter(
 async def upload_document(
     file: UploadFile = File(...),
     model: str = Query(...),
+    chunking_method: str = Query(...),
 ):
     try:
         return await process_document(
-        file=file,
-        model_name=model,
-    )
+            file=file,
+            model_name=model,
+            chunking_method=chunking_method,
+        )
 
     except ValueError as exc:
         raise HTTPException(
